@@ -1,10 +1,11 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-const admin = require("firebase-admin");
+
 const express = require("express");
 const userRoutes = require("./routes/users");
 const noteRoutes = require("./routes/notes");
+const admin = require("firebase-admin");
 const serviceAccountKey = {
   type: "service_account",
   project_id: process.env.PROJECT_ID,
