@@ -1,5 +1,10 @@
 # User Management API  
 This API provides user and note management functionality using Firebase Firestore as the database. The server is built with Node.js and Express.
+
+Base URL:
+**Base URL:**  
+[https://notes-manager-backend-app.onrender.com/](https://notes-manager-backend-app.onrender.com/)
+
 ## **Database Structure**
 
 ### **1. Users Collection**  
@@ -47,7 +52,7 @@ This API provides user and note management functionality using Firebase Firestor
 #### **Create User**  
 **Request:**  
 ```bash
-curl -X POST http://localhost:8080/users/signup
+curl -X POST https://notes-manager-backend-app.onrender.com/users/signup
 -H "Content-Type: application/json" \
 -d '{
   "name": "Sheikh Altamash",
@@ -73,7 +78,7 @@ curl -X POST http://localhost:8080/users/signup
 #### **User Login**  
 **Request:**  
 ```bash
-curl -X POST http://localhost:8080/users/login 
+curl -X POST  https://notes-manager-backend-app.onrender.com/users/login 
 -H "Content-Type: application/json" \
 -d '{
   "email": "altamash123456@gmail.com",
@@ -91,7 +96,7 @@ curl -X POST http://localhost:8080/users/login
 #### **Get User Details**  
 **Request:**  
 ```bash
-curl -X GET http://localhost:8080/users
+curl -X GET https://notes-manager-backend-app.onrender.com/users
 ```  
 **Response:**  
 ```json
@@ -106,7 +111,7 @@ curl -X GET http://localhost:8080/users
 #### **Update User**  
 **Request:**  
 ```bash
-curl -X PUT http://localhost:8080/users/edit
+curl -X PUT https://notes-manager-backend-app.onrender.com/users/edit
 -H "Content-Type: application/json" \
 -d '{
   "name": "Sheikh Altamash",
@@ -175,7 +180,7 @@ curl -X post https://notes-manager-backend-app.onrender.com/notes/getnote
 #### **Update Note**  
 **Request:**  
 ```bash
-curl -X PUT http://localhost:8080/notes/edit
+curl -X PUT https://notes-manager-backend-app.onrender.com/notes/edit
 -H "Content-Type: application/json" \
 -d '{
   "title": "Updated Title",
@@ -194,7 +199,7 @@ curl -X PUT http://localhost:8080/notes/edit
 #### **Delete Note**  
 **Request:**  
 ```bash
-curl -X DELETE http://localhost:8080/notes
+curl -X DELETE https://notes-manager-backend-app.onrender.com/notes/delete
 -H "Content-Type: application/json" \
 -d '{
   "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1",
@@ -211,7 +216,7 @@ curl -X DELETE http://localhost:8080/notes
 #### **Unauthorized Access**  
 **Request:**  
 ```bash
-curl -X GET http://localhost:8080/notes/TnQYPhOjUY8Swuw5lKwC
+curl -X GET https://notes-manager-backend-app.onrender.com/notes/TnQYPhOjUY8Swuw5lKwC
 ```  
 **Response:**  
 ```json
