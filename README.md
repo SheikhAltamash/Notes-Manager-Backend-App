@@ -1,7 +1,7 @@
 # User Management API  
 This API provides user and note management functionality using Firebase Firestore as the database. The server is built with Node.js and Express.
-
 ## **Database Structure**
+
 ### **1. Users Collection**  
 - **Collection Name:** `users`  
 - **Fields:**  
@@ -20,19 +20,25 @@ This API provides user and note management functionality using Firebase Firestor
   - `createdAt`: Timestamp when the note was created (timestamp)  
   - `updatedAt`: Timestamp when the note was last updated (timestamp)  
 
+---
+
 ## **API Endpoints**
+
 ### **Endpoints Overview**  
 
 | Endpoint           | Method | Description                        | Example Payload |
 |--------------------|--------|------------------------------------|-----------------|
-| `/users`           | `POST` | Create a new user                  | JSON Body       |
-| `/users/:userId`   | `GET`  | Get details of a specific user     | URL Parameter   |
-| `/users/:userId`   | `PUT`  | Update a user’s information        | JSON Body       |
-| `/users/:userId`   | `DELETE` | Delete a user                     | URL Parameter   |
-| `/notes`           | `POST` | Create a new note                  | JSON Body       |
-| `/notes/:noteId`   | `GET`  | Get a specific note                | URL Parameter   |
-| `/notes/:noteId`   | `PUT`  | Update a note                      | JSON Body       |
-| `/notes/:noteId`   | `DELETE` | Delete a note                     | URL Parameter   |
+| `/users/signup`           | `POST` | Create a new user                  | JSON Body       |
+| `/users/login`           | `POST` | Login a new user                  | JSON Body       |
+| `/users/logout`           | `POST` | Logout a new user                  | JSON Body       |
+| `/users/edit`     | `PUT`  | Update a user’s information        | JSON Body       |
+| `/users/delete`   | `DELETE` | Delete a user                     | JSON Body   |
+| `/notes/create`    | `POST` | Create a new note                  | JSON Body       |
+| `/notes/`   | `GET`  | Get all notes of a user             | JSON Body   |
+| `/notes/edit`   | `PUT`  | Update a note                      | JSON Body       |
+| `/notes/delete`   | `DELETE` | Delete a note                     | JSON Body   |
+
+---
 
 ## **Example Requests**
 
@@ -41,34 +47,58 @@ This API provides user and note management functionality using Firebase Firestor
 #### **Create User**  
 **Request:**  
 ```bash
-curl -X POST http://localhost:8080/users \
+curl -X POST http://localhost:8080/users/signup
 -H "Content-Type: application/json" \
 -d '{
-  "name": "John Doe",
-  "email": "john.doe@example.com"
+  "name": "Sheikh Altamash",
+  "email": "altamash123456@gmail.com"
+}'
+```  
+**Successful Response:**  
+```json
+{
+  "message": "User registered successfully",
+  "userId": "ePUhws7R3whhIV8AqfVLjo7HcdI3"
+}
+```
+
+**Unsuccessful Response:**  
+```json
+{
+  "message": "The email address is already in use by another account.",
+  "code": "auth/email-already-exists"
+}
+```
+
+#### **User Login**  
+**Request:**  
+```bash
+curl -X POST http://localhost:8080/users/login 
+-H "Content-Type: application/json" \
+-d '{
+  "email": "altamash123456@gmail.com",
+  "password": "your-password"
 }'
 ```  
 **Response:**  
 ```json
 {
-  "id": "user123",
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "createdAt": "2024-11-19T12:00:00Z"
+  "message": "User login successfully",
+  "UserId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1"
 }
 ```
 
 #### **Get User Details**  
 **Request:**  
 ```bash
-curl -X GET http://localhost:8080/users/user123
+curl -X GET http://localhost:8080/users
 ```  
 **Response:**  
 ```json
 {
-  "id": "user123",
-  "name": "John Doe",
-  "email": "john.doe@example.com",
+  "id": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1",
+  "name": "Sheikh Altamash",
+  "email": "altamash123456@gmail.com",
   "createdAt": "2024-11-19T12:00:00Z"
 }
 ```
@@ -76,32 +106,19 @@ curl -X GET http://localhost:8080/users/user123
 #### **Update User**  
 **Request:**  
 ```bash
-curl -X PUT http://localhost:8080/users/user123 \
+curl -X PUT http://localhost:8080/users/edit
 -H "Content-Type: application/json" \
 -d '{
-  "name": "Johnathan Doe",
-  "email": "johnathan.doe@example.com"
+  "name": "Sheikh Altamash",
+  "email": "altamash123456@gmail.com"
 }'
 ```  
 **Response:**  
 ```json
 {
-  "id": "user123",
-  "name": "Johnathan Doe",
-  "email": "johnathan.doe@example.com",
-  "updatedAt": "2024-11-19T12:30:00Z"
-}
-```
-
-#### **Delete User**  
-**Request:**  
-```bash
-curl -X DELETE http://localhost:8080/users/user123
-```  
-**Response:**  
-```json
-{
-  "message": "User deleted successfully"
+  "message": "User details updated successfully",
+  "email": "altamash123456@gmail.com",
+  "name": "Sheikh Altamash"
 }
 ```
 
@@ -112,71 +129,84 @@ curl -X DELETE http://localhost:8080/users/user123
 #### **Create Note**  
 **Request:**  
 ```bash
-curl -X POST http://localhost:8080/notes \
+curl -X POST http://localhost:8080/notes/create
 -H "Content-Type: application/json" \
 -d '{
-  "userId": "user123",
-  "title": "Meeting Notes",
-  "content": "Don't forget to prepare slides"
+  "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1",
+  "title": "Dream Big, Code Bigger – My Journey Begins",
+  "content": "Hey everyone! This is Altamash here. I’m thrilled to share my aspirations with you all. I’m diving headfirst into the world of tech to become a skilled MERN stack developer. It's a journey full of challenges and excitement, and I’m ready to embrace every moment of it. Let's keep learning, growing, and chasing our dreams together!""
 }'
 ```  
 **Response:**  
 ```json
 {
-  "id": "note456",
-  "userId": "user123",
-  "title": "Meeting Notes",
-  "content": "Don't forget to prepare slides",
-  "createdAt": "2024-11-19T13:00:00Z"
+  "noteId": "TnQYPhOjUY8Swuw5lKwC",
+  "title": "Dream Big, Code Bigger – My Journey Begins",
+  "content": "Hey everyone! This is Altamash here. I’m thrilled to share my aspirations with you all. I’m diving headfirst into the world of tech to become a skilled MERN stack developer. It's a journey full of challenges and excitement, and I’m ready to embrace every moment of it. Let's keep learning, growing, and chasing our dreams together!"",
+  "timestamp": "2024-11-20T11:30:26.397Z",
+  "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1"
 }
 ```
 
 #### **Get Note Details**  
 **Request:**  
 ```bash
-curl -X GET http://localhost:8080/notes/note456
+curl -X GET http://localhost:8080/notes/TnQYPhOjUY8Swuw5lKwC
 ```  
 **Response:**  
 ```json
 {
-  "id": "note456",
-  "userId": "user123",
-  "title": "Meeting Notes",
-  "content": "Don't forget to prepare slides",
-  "createdAt": "2024-11-19T13:00:00Z"
+  "noteId": "TnQYPhOjUY8Swuw5lKwC",
+  "title": "Dream Big, Code Bigger – My Journey Begins",
+  "content": "Hey everyone! This is Altamash here. I’m thrilled to share my aspirations with you all. I’m diving headfirst into the world of tech to become a skilled MERN stack developer. It's a journey full of challenges and excitement, and I’m ready to embrace every moment of it. Let's keep learning, growing, and chasing our dreams together!"",
+  "timestamp": {
+    "_seconds": 1732102226,
+    "_nanoseconds": 397000000
+  },
+  "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1"
 }
 ```
 
 #### **Update Note**  
 **Request:**  
 ```bash
-curl -X PUT http://localhost:8080/notes/note456 \
+curl -X PUT http://localhost:8080/notes/edit
 -H "Content-Type: application/json" \
 -d '{
-  "title": "Updated Meeting Notes",
-  "content": "Add action items"
+  "title": "Updated Title",
+  "content": "Updated content",
+  "id":"TnQYPhOjUY8Swuw5lKwC",
+  "userId":"TnQYPhOjUY8Swuw5lKwC"
 }'
 ```  
 **Response:**  
 ```json
 {
-  "id": "note456",
-  "userId": "user123",
-  "title": "Updated Meeting Notes",
-  "content": "Add action items",
-  "updatedAt": "2024-11-19T14:00:00Z"
+  "message": "Note updated successfully"
 }
 ```
 
 #### **Delete Note**  
 **Request:**  
 ```bash
-curl -X DELETE http://localhost:8080/notes/note456
+curl -X DELETE http://localhost:8080/notes/TnQYPhOjUY8Swuw5lKwC
 ```  
 **Response:**  
 ```json
 {
-  "message": "Note deleted successfully"
+  "message": "Note deleted successfully."
+}
+```
+
+#### **Unauthorized Access**  
+**Request:**  
+```bash
+curl -X GET http://localhost:8080/notes/TnQYPhOjUY8Swuw5lKwC
+```  
+**Response:**  
+```json
+{
+  "message": "You do not have access to this note"
 }
 ```
 
@@ -213,47 +243,15 @@ To make testing easier, import the following Postman collection:
         }
       }
     },
-    {
-      "name": "Get User Details",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:8080/users/user123",
-          "host": ["localhost:8080"],
-          "path": ["users", "user123"]
-        }
-      }
-    },
     ...
   ]
 }
 ```
-## **Dependencies**
-
-- **Node.js:** v16+  
-- **Firebase Admin SDK**  
-- **Express.js**  
 
 ## **Setup**
 
-1. Clone the repository:  
-   ```bash
-   git clone <repository_url>
-   cd <repository_directory>
-   ```
-
-2. Install dependencies:  
-   ```bash
-   npm install
-   ```
-
-3. Configure environment variables:  
-   - Copy `.env.example` to `.env`.  
-   - Add Firebase credentials and other required variables.
-
-4. Run the server:  
-   ```bash
-   npm start
-   ```
-
+1. Clone the repository.  
+2. Install dependencies: `npm install`  
+3. Configure environment variables.  
+4. Run the server: `npm start`  
 
