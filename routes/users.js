@@ -98,7 +98,7 @@ module.exports = (admin, db) => {
 
  
   router.put("/edit", async (req, res) => {
-    const { email, password, name ,id} = req.body;
+    const { email, password, name, id} = req.body;
     const userId = id;
 
     if (!email && !password && !name) {

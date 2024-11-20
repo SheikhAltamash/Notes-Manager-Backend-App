@@ -5,8 +5,8 @@ module.exports = (db) => {
   const router = express.Router();
   // Create a new note
   router.post("/create", async (req, res) => {
-    const { id, title, content } = req.body;
-
+    const { userId:userID, title, content } = req.body;
+    const id = userID;
     if (!title || !content) {
       return res
         .status(400)
@@ -31,7 +31,7 @@ module.exports = (db) => {
 
   // Get all notes for the authenticated user
   router.get("/", async (req, res) => {
-        const { id } = req.body;
+        const { userId:id } = req.body;
 const userId = id
     try {
       const notesSnapshot = await db
@@ -57,7 +57,7 @@ const userId = id
 
   // Get a specific note by ID
   router.post("/getnote",  async (req, res) => {
-    const { noteId,userId } = req.body;
+    const { id:noteId,userId } = req.body;
      // Get user ID from session
 
     try {
@@ -79,7 +79,7 @@ const userId = id
     }
   });
     router.put("/edit", async (req, res) => {
-    const { title, content, noteId } = req.body;
+    const { title, content, id:noteId } = req.body;
 
     // Ensure at least one field is provided for update
     if (!title && !content) {
@@ -114,7 +114,7 @@ const userId = id
 
  // Delete Note Route
 router.delete("/delete", async (req, res) => {
-  const { userId, noteId } = req.body;
+  const { userId, id:noteId } = req.body;
 
   // Validate inputs
   if (!userId || !noteId) {
