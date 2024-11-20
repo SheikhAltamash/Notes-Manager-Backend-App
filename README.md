@@ -129,7 +129,7 @@ curl -X PUT http://localhost:8080/users/edit
 #### **Create Note**  
 **Request:**  
 ```bash
-curl -X POST http://localhost:8080/notes/create
+curl -X POST https://notes-manager-backend-app.onrender.com/notes/create
 -H "Content-Type: application/json" \
 -d '{
   "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1",
@@ -151,7 +151,12 @@ curl -X POST http://localhost:8080/notes/create
 #### **Get Note Details**  
 **Request:**  
 ```bash
-curl -X GET http://localhost:8080/notes/TnQYPhOjUY8Swuw5lKwC
+curl -X post https://notes-manager-backend-app.onrender.com/notes/getnote
+-H "Content-Type: application/json" \
+-d '{
+  "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1",
+ "noteId": "TnQYPhOjUY8Swuw5lK"
+}'
 ```  
 **Response:**  
 ```json
@@ -189,7 +194,12 @@ curl -X PUT http://localhost:8080/notes/edit
 #### **Delete Note**  
 **Request:**  
 ```bash
-curl -X DELETE http://localhost:8080/notes/TnQYPhOjUY8Swuw5lKwC
+curl -X DELETE http://localhost:8080/notes
+-H "Content-Type: application/json" \
+-d '{
+  "userId": "4Ou9abwdHKRl2Y3DHp8CEGXmuEo1",
+  "id": "TnQYPhOjUY8Swuw5lKwC"
+}'
 ```  
 **Response:**  
 ```json
@@ -238,7 +248,7 @@ To make testing easier, import the following Postman collection:
         },
         "url": {
           "raw": "http://localhost:8080/users",
-          "host": ["localhost:8080"],
+          "host": ["https://notes-manager-backend-app.onrender.com/"],
           "path": ["users"]
         }
       }
